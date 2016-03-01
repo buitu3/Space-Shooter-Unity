@@ -29,5 +29,6 @@ public class PauseGameButton : MonoBehaviour {
     {
         Time.timeScale = 0.0f;
         pauseGameMenu.SetActive(true);
+        
     }
 }

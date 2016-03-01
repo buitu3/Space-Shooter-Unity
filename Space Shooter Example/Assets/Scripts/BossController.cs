@@ -10,8 +10,6 @@ public class BossBolt
 	public GameObject straightRoundBolt;
 	public GameObject curveRoundBolt;
 	public GameObject curveToPlayerRoundBolt;
-    public GameObject staticRoundBolt;
-    public GameObject chasingTargetBolt;
 }
 
 [System.Serializable]
@@ -52,11 +50,8 @@ public class BossController : MonoBehaviour {
 	public BossBolt bolt;
 	public BossInfo bossInfo;
 
-    private GameObject player;
-    private Transform bossTransform;
-    private Rigidbody bossRigidBody;
 	private List<int> shootingTypeList;
-	private int numberOfShootingType = 7;
+	private int numberOfShootingType = 6;
 
 	//==============================================
 	// Getters and Setters
@@ -67,47 +62,23 @@ public class BossController : MonoBehaviour {
 	//==============================================
 
 	void Start () {
-        //player = GameObject.FindWithTag("Player");
-        player = PlayerController.Instance.gameObject;
-
-        bossRigidBody = GetComponent<Rigidbody>();
-        bossTransform = GetComponent<Transform>();
-
 		StartCoroutine(shootWaves());
-        /*
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 50; i++)
         {
-            StartCoroutine(shootBoltCurveToPlayer(5, bolt.curveToPlayerRoundBolt));
+            //StartCoroutine(shootBoltCurveToPlayer(300, bolt.curveToPlayerRoundBolt));
         }
-        */
-        //StartCoroutine(ShootTest());
-        
 	}
 
-    IEnumerator ShootTest()
-    {
-        //while (true)
-        //{
-        //    //yield return StartCoroutine(shootBoltCurveToPlayer(5, bolt.curveToPlayerRoundBolt));
-            yield return new WaitForSeconds(3.0f);
-            yield return StartCoroutine(shootSnakeChasingBolt(15));
-        //    yield return new WaitForSeconds(1.0f);
-        //}        
-        
-    }
-        
-
 	void Update () {
-        
-        if (bossRigidBody.position.z > 13)
+
+		if (rigidbody.position.z > 13)
 		{
 			//transform.Translate
-            bossRigidBody.velocity = new Vector3(0, 0, -bossInfo.speed);		
+			rigidbody.velocity = new Vector3 (0, 0, -bossInfo.speed);		
 		} else 
 		{
-            bossRigidBody.velocity = new Vector3(0, 0, 0);
+			rigidbody.velocity = new Vector3 (0,0,0);
 		}
-        
 
 //		GameObject playerObject = GameObject.FindWithTag ("Player");
 //		Vector3 playerDir = playerObject.transform.position - transform.position;
@@ -164,66 +135,76 @@ public class BossController : MonoBehaviour {
 			if (i == shootingTypeCount - 1){
 				switch(random) {
 				case 1 : {
-					yield return StartCoroutine(shootCircleBolts(bossInfo.miniWave+5,bossInfo.numberOfBolts+5,bolt.straightBolt));
+					yield return StartCoroutine(shootCircleBolts(bossInfo.miniWave+5, 
+								                                bossInfo.numberOfBolts+5, 
+								                                bolt.straightBolt));
 					break;
 				}
 				case 2 : {
-					yield return StartCoroutine(shootCurveCircleBolts(bossInfo.miniWave+5,bossInfo.numberOfBolts+5,bolt.curveBolt));
+					yield return StartCoroutine(shootCurveCircleBolts(bossInfo.miniWave+5,
+					                                    			bossInfo.numberOfBolts+5,
+					                                     			bolt.curveBolt));
 					break;
 				}
 				case 3 : {
-					yield return StartCoroutine(shootReverseCurveCircleBolts(bossInfo.miniWave+5,bossInfo.numberOfBolts+5,bolt.curveBolt));
+					yield return StartCoroutine(shootReverseCurveCircleBolts(bossInfo.miniWave+5, 
+					                                            			bossInfo.numberOfBolts+5,
+					                                            			bolt.curveBolt));
 					break;
 				}
 				case 4 : {
-					yield return StartCoroutine(shootBoltsToPlayer(bossInfo.numberOfBolts+5,bolt.straightRoundBolt));
+					yield return StartCoroutine(shootBoltsToPlayer(bossInfo.numberOfBolts+5, 
+					                                  				bolt.straightRoundBolt));
 					break;
 				}
 				case 5 : {
-					yield return StartCoroutine(shootTwistedCircleBolts(bossInfo.miniWave+10,bossInfo.numberOfBolts-2,bolt.straightRoundBolt));
+					yield return StartCoroutine(shootTwistedCircleBolts(bossInfo.miniWave+10,
+					                                       				bossInfo.numberOfBolts-2,
+					                                       				bolt.straightRoundBolt));
 					break;
 				}
 				case 6 : {
-                    yield return StartCoroutine(shootSnakeChasingBolt(bossInfo.numberOfBolts - 2));
+					yield return StartCoroutine(shootBoltCurveToPlayer(bossInfo.numberOfBolts-2,
+                                                                    bolt.curveToPlayerRoundBolt));
 					break;
 				}
-                case 7:
-                {
-                    yield return StartCoroutine(shootBoltCurveToPlayer(bossInfo.numberOfBolts - 2, bolt.curveToPlayerRoundBolt));
-                    break;
-                }
 				}
 			}else {
 				switch(random) {
 				case 1 : {
-					StartCoroutine(shootCircleBolts(bossInfo.miniWave+5, bossInfo.numberOfBolts+5,bolt.straightBolt));
+					StartCoroutine(shootCircleBolts(bossInfo.miniWave+5, 
+					                                bossInfo.numberOfBolts+5, 
+					                                bolt.straightBolt));
 					break;
 				}
 				case 2 : {
-					StartCoroutine(shootCurveCircleBolts(bossInfo.miniWave+5,bossInfo.numberOfBolts+5,bolt.curveBolt));
+					StartCoroutine(shootCurveCircleBolts(bossInfo.miniWave+5,
+					                                     bossInfo.numberOfBolts+5,
+					                                     bolt.curveBolt));
 					break;
 				}
 				case 3 : {
-					StartCoroutine(shootReverseCurveCircleBolts(bossInfo.miniWave+5, bossInfo.numberOfBolts+5,bolt.curveBolt));
+					StartCoroutine(shootReverseCurveCircleBolts(bossInfo.miniWave+5, 
+					                                            bossInfo.numberOfBolts+5,
+					                                            bolt.curveBolt));
 					break;
 				}
 				case 4 : {
-					StartCoroutine(shootBoltsToPlayer(bossInfo.numberOfBolts+5,bolt.straightRoundBolt));
+					StartCoroutine(shootBoltsToPlayer(bossInfo.numberOfBolts+5, 
+					                                  bolt.straightRoundBolt));
 					break;
 				}
 				case 5 : {
-					StartCoroutine(shootTwistedCircleBolts(bossInfo.miniWave+10,bossInfo.numberOfBolts-2,bolt.straightRoundBolt));
+					StartCoroutine(shootTwistedCircleBolts(bossInfo.miniWave+10,
+					                                       bossInfo.numberOfBolts-2,
+					                                       bolt.straightRoundBolt));
 					break;
 				}
 				case 6 : {
-                    StartCoroutine(shootSnakeChasingBolt(bossInfo.numberOfBolts - 2));
+					StartCoroutine(shootBoltCurveToPlayer(bossInfo.numberOfBolts-2,
+					                                      bolt.curveToPlayerRoundBolt));
 					break;
 				}
-                case 7:
-                {
-                    StartCoroutine(shootBoltCurveToPlayer(bossInfo.numberOfBolts - 2, bolt.curveToPlayerRoundBolt));
-                    break;
-                }
 				}
 			}
 		}
@@ -294,7 +275,10 @@ public class BossController : MonoBehaviour {
 
 	IEnumerator shootBoltsToPlayer (int numberOfBolts,GameObject gameObject){
 		for (int i = 0; i < numberOfBolts; i++){
-			if (player != null){
+			GameObject playerObject = GameObject.FindWithTag("Player");
+			if (playerObject != null){
+				PlayerController player = playerObject.GetComponent<PlayerController>();
+				
 				Vector3 boltPosition = new Vector3(bossShotSpawn.position.x, 
 				                                   0, 
 				                                   bossShotSpawn.position.z - radius);
@@ -339,59 +323,6 @@ public class BossController : MonoBehaviour {
 			yield return new WaitForSeconds(bossInfo.fireRate);
 		}
 	}
-
-    IEnumerator shootSnakeChasingBolt(int numberOfBolts)
-    {
-        GameObject[] chasingBoltArr = new GameObject[numberOfBolts];
-
-        for (int i = 0; i < numberOfBolts; i++)
-        {
-            Vector3 boltPosition = new Vector3(bossShotSpawn.position.x, 0, bossShotSpawn.position.z - radius);
-            Quaternion boltRotation = Quaternion.Euler(0, -180, 0);
-
-            chasingBoltArr[i] = Instantiate(bolt.chasingTargetBolt, boltPosition, boltRotation) as GameObject;
-
-            if (i == 0)
-            {
-                chasingBoltArr[i].GetComponent<ChasingTargetBoltMover>().target = player;
-            }
-            else
-            {
-                chasingBoltArr[i].GetComponent<ChasingTargetBoltMover>().target = chasingBoltArr[i - 1];
-            }
-
-            yield return new WaitForSeconds(bossInfo.fireRate);
-        }
-
-
-        //for (int i = numberOfBolts-1; i >= 0; i--)
-        //{
-        //    Vector3 boltPosition = new Vector3(bossShotSpawn.position.x, 0, bossShotSpawn.position.z - radius);
-        //    Quaternion boltRotation = Quaternion.Euler(0, -180, 0);
-
-        //    chasingBoltArr[i] = Instantiate(bolt.chasingTargetBolt, boltPosition, boltRotation) as GameObject;
-
-        //    chasingBoltArr[i].SetActive(false);
-        //}
-        //for (int i = 0; i < numberOfBolts; i++)
-        //{
-        //    Vector3 boltPosition = new Vector3(bossShotSpawn.position.x, 0, bossShotSpawn.position.z - radius);
-        //    Quaternion boltRotation = Quaternion.Euler(0, -180, 0);
-
-        //    chasingBoltArr[i] = Instantiate(bolt.chasingTargetBolt, boltPosition, boltRotation) as GameObject;
-
-        //    if (i == 0)
-        //    {
-        //        chasingBoltArr[i].GetComponent<ChasingTargetBoltMover>().target = player;
-        //    }
-        //    else
-        //    {
-        //        chasingBoltArr[i].GetComponent<ChasingTargetBoltMover>().target = chasingBoltArr[i - 1];
-        //    }
-
-        //    yield return new WaitForSeconds(bossInfo.fireRate);
-        //}
-    }
-
+	
 	#endregion
 }

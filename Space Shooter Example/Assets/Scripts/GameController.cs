@@ -4,20 +4,6 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
-    // Create Singleton
-    private static GameController _instance;
-    public static GameController Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = GameObject.FindObjectOfType<GameController>();
-            }
-            return _instance;
-        }
-    }          
-
 	//==============================================
 	// Constants
 	//==============================================
@@ -27,25 +13,21 @@ public class GameController : MonoBehaviour {
 	//==============================================
 
 	public Transform bossSpawn;
-
 	public GameObject boss;
+	//public GUIText bossHealthText;
+	//public GUIText bossLevelText;
     public Text bossHealthText;
     public Text bossLevelText;
-    private BossController bossController;
-    // Level of the previous Boss
-    private int previousBossLevel;
-    private bool bossAlive;
-
     public GameObject gameOverMenu;
-
-    // Background Music
-    private AudioSource BGM;
-
-    private GameObject gameInfo;
-    private GameInfoContainer gameInfoContainer;
 
 	public float startWait;
 	public float waveWait;
+	
+	private BossController bossController;
+	private int previousBossLevel;				// Level of the previous Boss
+	//private GameObject bossObject;
+
+	private bool bossAlive;
 
 	//==============================================
 	// Getters and Setters
@@ -63,34 +45,16 @@ public class GameController : MonoBehaviour {
 	// Unity Methods
 	//==============================================
 
-	void Awake () {
+	void Start () {
 		// Init first boss
         GameObject bossObject = (GameObject)Instantiate(boss, bossSpawn.position, bossSpawn.rotation);
 		bossController = bossObject.GetComponent<BossController>();
-        BGM = GetComponent<AudioSource>();
-
-        // Separate Background music from volume listener
-        BGM.ignoreListenerVolume = true;
-
-        // Get Game Information Container
-        gameInfo = GameObject.FindWithTag("Game Info Container");
-        if (gameInfo != null)
-        {
-            gameInfoContainer = gameInfo.GetComponent<GameInfoContainer>();
-            DontDestroyOnLoad(gameInfo);
-            updateVolume();
-        }
-        if (gameInfoContainer == null)
-        {
-            print("Cannot find GameInfoContainer component");
-        }
-
 		bossAlive = true;
 		previousBossLevel = bossController.bossInfo.level;
 		StartCoroutine(spawnWaves());			// Spawn Boss continously
 
 		updateBossHealthText();
-		updateBossLevelText();        
+		updateBossLevelText();
 	}
 
 	//==============================================
@@ -133,13 +97,6 @@ public class GameController : MonoBehaviour {
 	public void updateBossLevelText(){
 		bossLevelText.text = "Boss Level : " + bossController.bossInfo.level;
 	}
-    
-    // Change Volume based on saved infomation
-    void updateVolume()
-    {
-        BGM.volume = gameInfoContainer.BGM;
-        AudioListener.volume = gameInfoContainer.SFX;
-    }
 
 	public void endGame(){
         gameOverMenu.SetActive(true);

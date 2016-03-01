@@ -21,8 +21,6 @@ public class CurveToPlayerBoltMover : MonoBehaviour {
 	public float rotateSpeed;
 
 	private GameObject playerObject;
-    private Transform boltTransform;
-    private Rigidbody boltRigidBody;
 
 	//==============================================
 	// Getters and Setters
@@ -41,23 +39,13 @@ public class CurveToPlayerBoltMover : MonoBehaviour {
 		StartCoroutine(approachPlayer());
 	}
     */
-    void Start()
+    void Awake()
     {
-        /*
         playerObject = GameObject.FindWithTag("Player");
         if (playerObject == null)
         {
             print("Cannot find Player");
         }
-        */
-        if (PlayerController.Instance.gameObject != null)
-        {
-            playerObject = PlayerController.Instance.gameObject;
-        }
-
-        boltRigidBody = gameObject.GetComponent<Rigidbody>();
-        boltTransform = gameObject.GetComponent<Transform>();
-
         StartCoroutine(approachPlayer());
     }
 	/*
@@ -130,10 +118,10 @@ public class CurveToPlayerBoltMover : MonoBehaviour {
 
 	IEnumerator approachPlayer(){
 		while (true){
-            boltRigidBody.velocity = boltTransform.forward * speed;
+			rigidbody.velocity = transform.forward * speed;
 			
 			if (playerObject != null){
-                Vector3 playerDir = playerObject.transform.position - boltTransform.position;
+				Vector3 playerDir = playerObject.transform.position - transform.position;
 				playerDir = transform.InverseTransformVector(playerDir);
 				
 				float dx = playerDir.x;
@@ -149,25 +137,19 @@ public class CurveToPlayerBoltMover : MonoBehaviour {
 				}
 				
 				// Gradually rotate bolt to player's direction
-                float AbsAngle = Mathf.Abs(angle);
-                if (AbsAngle >= rotateSpeed)
-                {
+				
+				if (Mathf.Abs(angle) >= rotateSpeed){
 					if (angle < 0){
-                        boltRigidBody.angularVelocity = (new Vector3(0, -rotateSpeed, 0));
+						rigidbody.angularVelocity = (new Vector3(0, -rotateSpeed, 0));
 					}
 					if (angle > 0){
-                        boltRigidBody.angularVelocity = (new Vector3(0, rotateSpeed, 0));
+						rigidbody.angularVelocity = (new Vector3(0, rotateSpeed, 0));
 					}
-                }
-                else if (AbsAngle == 0)
-                {
-                    boltRigidBody.angularVelocity = (new Vector3(0, 0, 0));
-                }
-                else if (AbsAngle < rotateSpeed)
-                {
-                    boltRigidBody.angularVelocity = (new Vector3(0, angle, 0));
+				}else if (Mathf.Abs(angle) == 0){
+					rigidbody.angularVelocity = (new Vector3(0, 0, 0));
+				}else if (Mathf.Abs(angle) < rotateSpeed){
+					rigidbody.angularVelocity = (new Vector3(0, angle, 0));
 				}
-               
 			}
 			yield return new WaitForSeconds(0.3f);
 		}

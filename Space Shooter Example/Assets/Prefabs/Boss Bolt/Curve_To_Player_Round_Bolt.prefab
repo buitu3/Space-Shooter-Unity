@@ -62,7 +62,7 @@ Transform:
   m_Father: {fileID: 420016}
   m_RootOrder: 0
 --- !u!23 &2320018
-MeshRenderer:
+Renderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -70,19 +70,15 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 185f97f18bd603a478461ce9c08bd039, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
 --- !u!33 &3320018
@@ -120,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossExplosion: {fileID: 0}
   playerExplosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
+  player: {fileID: 0}
 --- !u!114 &11420018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,3 +153,4 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120016}
   m_IsPrefabParent: 1
+  m_IsExploded: 1

@@ -17,22 +17,6 @@ public class PlayerBolt
 
 public class PlayerController : MonoBehaviour {
 
-    // Create Singleton
-    //private static PlayerController _instance;
-    public static PlayerController Instance;
-        /*
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = GameObject.FindObjectOfType<PlayerController>();
-            }
-            return _instance;
-        }
-    }
-          */
-
 	//==============================================
 	// Constants
 	//==============================================
@@ -64,8 +48,6 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-        Instance = this;
-
         playerRigidbody = GetComponent<Rigidbody>();
         isDead = false;
     }
@@ -126,9 +108,9 @@ public class PlayerController : MonoBehaviour {
 
         // Limit player movement inside the screen
         playerRigidbody.position = new Vector3(
-                Mathf.Clamp(playerRigidbody.position.x, boundary.xMin, boundary.xMax),
+				Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax),
 				0.0f,
-                Mathf.Clamp(playerRigidbody.position.z, boundary.zMin, boundary.zMax)
+				Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
 		);
 		
 	}
@@ -142,8 +124,7 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         while (true)
         {
-            GameObject boltInstance = Instantiate(bolt.straightBolt, mShotSpawn.position, mShotSpawn.rotation) as GameObject;
-            boltInstance.transform.SetParent(Instance.transform);
+            Instantiate(bolt.straightBolt, mShotSpawn.position, mShotSpawn.rotation);
             yield return new WaitForSeconds(fireRate);
         }
     }

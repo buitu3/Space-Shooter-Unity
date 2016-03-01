@@ -61,7 +61,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2300000
-MeshRenderer:
+Renderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -69,20 +69,16 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: c547624e174de984882f0a14b4bb32e1, type: 2}
   - {fileID: 2100000, guid: 1e0350b97c61bfb4a91c62d756d01727, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
 --- !u!33 &3300000
@@ -129,8 +125,6 @@ MonoBehaviour:
     curveRoundBolt: {fileID: 100002, guid: afe8f0ae208f8374ba2d20c6b60b9143, type: 2}
     curveToPlayerRoundBolt: {fileID: 120016, guid: 40d047648b866704ab1363ff4f95f995,
       type: 2}
-    staticRoundBolt: {fileID: 128296, guid: 57eaadff280cc724ea14cb9f4cd9e4ba, type: 2}
-    chasingTargetBolt: {fileID: 103518, guid: b5507a3fcec0dfc4b9f62820242c8d51, type: 2}
   bossInfo:
     speed: 5
     fireRate: .300000012
@@ -161,3 +155,4 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100002}
   m_IsPrefabParent: 1
+  m_IsExploded: 1
